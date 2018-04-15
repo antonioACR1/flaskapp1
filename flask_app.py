@@ -72,7 +72,7 @@ def suggestion():
 	df['country_numeric']=le_country.fit_transform(df['country'])
 #ASEGURARSE QUE HAY UNA OBSERVACION POR CADA PAIS EN EL TRAINING 
 	df_train=df[["age","country_numeric","sex","answer1","answer2","answer3","answer4","answer5"]]
-	y_train=pd.read_sql('SELECT suggestion FROM answers WHERE ID != (SELECT MAX(ID) FROM answers)',con=db)     
+	y_train=pd.read_sql('SELECT suggestion FROM answers WHERE ID != (SELECT MAX(ID) FROM answers WHERE suggestion IS NOT NULL)',con=db)     
 	modelo=DecisionTreeClassifier()
 	modelo.fit(df_train,y_train)
 #Prediction
@@ -87,7 +87,7 @@ def suggestion():
 	link_numeric=le_link.fit_transform(df['link1'])
 	song=le_song.inverse_transform(suggestion_numeric)
 	link=le_link.inverse_transform(suggestion_numeric)
-	return song
+	return render_template('suggested_song.html',song=song,link=link)
 
 
 
