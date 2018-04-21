@@ -15,10 +15,10 @@ import pandas as pd
 mysql=MySQL()
 
 app=Flask(__name__)
-app.config['MYSQL_DATABASE_USER']='root'
+app.config['MYSQL_DATABASE_USER']='antonioACR1'
 app.config['MYSQL_DATABASE_PASSWORD']='password123'
-app.config['MYSQL_DATABASE_DB']='suggestions'
-app.config['MYSQL_DATABASE_HOST']='localhost'
+app.config['MYSQL_DATABASE_DB']='antonioACR1$suggestions'
+app.config['MYSQL_DATABASE_HOST']='antonioACR1.mysql.pythonanywhere-services.com'
 mysql.init_app(app)
 
 @app.route("/")
@@ -65,7 +65,7 @@ def signUp():
 
 @app.route('/suggestion')    
 def suggestion():
-	db = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="password123", db="suggestions")
+	db = MySQLdb.connect(host="antonioACR1.mysql.pythonanywhere-services.com", user="antonioACR1", passwd="password123", db="antonioACR1$suggestions")
 	df = pd.read_sql('SELECT age,country,sex,answer1,answer2,answer3,answer4,answer5,song1,link1 FROM answers WHERE ID != (SELECT MAX(ID) FROM answers)',con=db)    
 	df['country']=df['country'].astype('str')
 	le_country=preprocessing.LabelEncoder()
